@@ -5,7 +5,8 @@ class Student
 {
 private:
 	string Name;
-	int Id, examScore;
+	int Id, examScore,exam1,exam3,final;
+	
 
 public:
 	Student(int Id,string Name,int examScore);

@@ -1,9 +1,11 @@
 ﻿#include <iostream>
 #include "Student.h"
 #include <list>
+#include <algorithm>
 using namespace std;
 
 void showMenu() {
+	cout << endl;
 	cout << "********************************************" << endl;
 	cout << "****************** -MENU- ******************" << endl;
 	cout << "********************************************" << endl;
@@ -13,15 +15,14 @@ void showMenu() {
 	cout << "4- Search Student" << endl;
 	cout << "5- Exit" << endl;
 	cout << endl;
-}
-
+} 
 void addStudent(list<Student>* lst) {
 	int id;
-	string ad;
+	string ad,soyad;
 	int snot;
 	cout << "ID giriniz: " << endl;
 	cin >> id;
-	cout << "İsim giriniz: " << endl;
+	cout << "Isim giriniz: " << endl;
 	cin >> ad;
 	cout << "Sinav notunu giriniz: " << endl;
 	cin >> snot;
@@ -30,10 +31,55 @@ void addStudent(list<Student>* lst) {
 	cout << "Ogrenci bilgileri basarili bir sekilde eklendi." << endl;
 }
 void showList(list<Student>* lst) {
+	cout << "---OGRENCI LİSTESİ---" << endl;
+	list<Student>::iterator it;
+	for (it = lst->begin(); it != lst->end(); it++)
+	{
+		it->printAllMember();
+	}
+}
+void deleteStudent(list<Student>* lst) {
+	cout << "---OGRENCI SILME---" << endl; 
+	bool found = false;
+	int idNo;
+	cout << "Silmek istediginiz ogrencinin ID numarasını giriniz." << endl;
+	cin >> idNo;
+	list<Student>::iterator it;
+	for (it = lst->begin(); it != lst->end(); it++)
+	{
+		if (it->getId() == idNo)
+		{
+			lst->erase(it);
+			cout << "Ogrenci kaydi basarili bir sekide silindi" << endl;
+			break;
+		}
+	}if (!found)
+	{
+		cout << "Aranan ogrenci bulunamadi" << endl;
+	}
 
 }
-void deleteStudent() {}
-void Search() {}
+void Search(list<Student>* lst) {
+	cout << "---OGRENCI ARAMA---" << endl;
+	bool found = false;
+	int idNo;
+	cout << "Aramak istediginiz ogrencinin ID numarasını giriniz." << endl;
+	cin >> idNo;
+	list<Student>::iterator it;
+	for (it = lst->begin(); it != lst->end(); it++)
+	{
+		if (it->getId() == idNo)
+		{
+			it->printAllMember(); 
+			found = true;
+			break;
+		} 
+	}
+	if (!found)
+	{
+		cout << "Aranan ogrenci bulunamadi" << endl;
+	}
+}
 
 int main()
 {
@@ -59,12 +105,12 @@ int main()
 		}
 		case 3:
 		{
-			deleteStudent();
+			deleteStudent(studentList);
 			break;
 		}
 		case 4:
 		{
-			Search();
+			Search(studentList);
 			break;
 		}
 		default:
