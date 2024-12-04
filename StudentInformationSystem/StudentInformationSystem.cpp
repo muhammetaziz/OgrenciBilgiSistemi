@@ -9,24 +9,31 @@ void showMenu() {
 	cout << "********************************************" << endl;
 	cout << "****************** -MENU- ******************" << endl;
 	cout << "********************************************" << endl;
+	cout << endl;
 	cout << "1- Add New Member" << endl;
 	cout << "2- Show List" << endl;
 	cout << "3- Remove Selected " << endl;
 	cout << "4- Search Student" << endl;
-	cout << "5- Exit" << endl;
+	cout << "5- New exam input" << endl;
+	cout << "6- Exit" << endl;
 	cout << endl;
-} 
+}
 void addStudent(list<Student>* lst) {
 	int id;
-	string ad,soyad;
-	int snot;
+	string ad, soyad;
+	int firstExam, secondExam, fExam;
 	cout << "ID giriniz: " << endl;
 	cin >> id;
 	cout << "Isim giriniz: " << endl;
 	cin >> ad;
-	cout << "Sinav notunu giriniz: " << endl;
-	cin >> snot;
-	Student std(id, ad, snot);
+	cout << "Vize 1 notunu giriniz: " << endl;
+	cin >> firstExam;
+	cout << "Vize 2 notunu giriniz: " << endl;
+	cin >> secondExam;
+	cout << "Final notunu giriniz: " << endl;
+	cin >> fExam;
+	double ortalama = ((firstExam * 0.2) + (secondExam * 0.2) + (fExam * 0.6));
+	Student std(id, ad, firstExam, secondExam, fExam, ortalama);
 	lst->push_back(std);
 	cout << "Ogrenci bilgileri basarili bir sekilde eklendi." << endl;
 }
@@ -39,7 +46,7 @@ void showList(list<Student>* lst) {
 	}
 }
 void deleteStudent(list<Student>* lst) {
-	cout << "---OGRENCI SILME---" << endl; 
+	cout << "---OGRENCI SILME---" << endl;
 	bool found = false;
 	int idNo;
 	cout << "Silmek istediginiz ogrencinin ID numarasını giriniz." << endl;
@@ -70,10 +77,31 @@ void Search(list<Student>* lst) {
 	{
 		if (it->getId() == idNo)
 		{
-			it->printAllMember(); 
+			it->printAllMember();
 			found = true;
 			break;
-		} 
+		}
+	}
+	if (!found)
+	{
+		cout << "Aranan ogrenci bulunamadi" << endl;
+	}
+}
+void newExamScore(list<Student>* lst) {
+	int idNo;
+	bool found = false;
+	cout << "Notunu Degistirmek istediginiz ogrenci ID sini giriniz." << endl;
+	cin >> idNo;
+	list<Student>::iterator  it;
+	for (it = lst->begin(); it != lst->end(); it++)
+	{
+		if (it->getId() == idNo)
+		{
+			it->printAllMember();
+			it->calculateAvarage();
+			cout << "Notlar basariyla degistirildi." << endl;
+			it->printAllMember();
+		}
 	}
 	if (!found)
 	{
@@ -113,18 +141,14 @@ int main()
 			Search(studentList);
 			break;
 		}
+		case 5:
+		{
+			newExamScore(studentList);
+			break;
+		}
 		default:
 			cout << "You made the wrong choice" << endl;
 			break;
 		}
-
-	} while (secim != 5);
-
-
-
-
-
-
-
-
+	} while (secim != 6);
 }

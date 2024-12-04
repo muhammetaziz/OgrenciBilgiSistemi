@@ -5,17 +5,21 @@ class Student
 {
 private:
 	string Name;
-	int Id, examScore,exam1,exam3,final;
-	
+	int Id, exam1, exam2, finalExam;
+	double avarageScore;
 
 public:
-	Student(int Id,string Name,int examScore);
+	Student(int Id, string Name, int exam1, int exam2, int finalExam, double avarageScore);
 	~Student();
 
 	void setId(int Id);
 	void setName(string Name);
-	void setScore(int examScore);
-	
+	void setScore1(int exam1);
+	void setScore2(int exam2);
+	void setScore3(int finalExam);
+
+	void calculateAvarage();
+
 	int getId();
 	string getName();
 	int getScore();
